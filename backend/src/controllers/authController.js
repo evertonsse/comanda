@@ -14,10 +14,10 @@ const authenticate = async (req, res) => {
 	})
 	if (user) {
 		if (await crypt.checkPassword(password, user.password)) {
-			const token = jwt.sign({ userid: user.id }, config.secret, {
+			const token = jwt.sign({ userId: user.id }, config.secret, {
 				expiresIn: 30000,
 			})
-			return res.json({ auth: true, token })
+			return res.json({ auth: true, token , userId: user.id})
 		}
 	} else {
 		return res.status(401).json('Não autorizado.')
