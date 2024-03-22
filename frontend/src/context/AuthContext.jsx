@@ -7,29 +7,29 @@ export const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null); 
 
+
     useEffect(()=>{
         const loadingStorageData = async() => {
             const storageUser = localStorage.getItem('@Auth:user');
             const storageToken = localStorage.getItem('@Auth:token');
-    
+
+			
             if (storageUser && storageToken) { 
                 setUser(storageUser)
             }
         }
-        loadingStorageData; 
+        loadingStorageData();
 
     }, [])
 
-
-  
-
-	const Login = async (email, password) => {
+	const Login = async ({email, password}) => {
 		const response = await api.post('/login', { email, password })
 
 		if (response.data.error) {
 			alert('Erro ao fazer login')
 		} else {
-			const { token } = response.data.token
+			const { token } = response.data
+			
 			setUser(response.data.userId)
 			localStorage.setItem('@Auth:token', token)
 			localStorage.setItem('@Auth:user', response.data.userId)

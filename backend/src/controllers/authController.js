@@ -5,11 +5,11 @@ const Op = require('sequelize')
 const crypt = require('../utils/crypt')
 
 const authenticate = async (req, res) => {
-	const { username, password } = req.body
+	const { email, password } = req.body
 
 	const user = await User.findOne({
 		where: {
-			username,
+			email,
 		},
 	})
 	if (user) {
