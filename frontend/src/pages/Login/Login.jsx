@@ -1,24 +1,27 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Form, Input, Button, Flex, Layout, Divider, Typography } from 'antd'
 import { AuthContext } from '../../context/AuthContext'
 import { Navigate } from 'react-router-dom'
 
 const Login = () => {
-
+	const [disabled, setDisabled] = useState(false)
 	const { Login, signed } = useContext(AuthContext)
-		const handleLogin = async (e) => {
-    console.log(e)
+
+	const handleLogin = async (e) => {
+		setDisabled(true)
 		const data = {
-			email : e.email,
-			password : e.password,
+			email: e.email,
+			password: e.password,
 		}
 
-		await Login(data)
+		if ((await Login(data)) == false) {
+			setDisabled(false)
+		}
 	}
 
 	if (signed) {
-	return 	<Navigate to="/home"/>
+		return <Navigate to="/home" />
 	} else
 		return (
 			<Layout
@@ -92,6 +95,7 @@ const Login = () => {
 							type="primary"
 							htmlType="submit"
 							style={{ width: '100px' }}
+							disabled={disabled}
 						>
 							Entrar
 						</Button>
