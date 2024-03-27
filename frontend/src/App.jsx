@@ -1,15 +1,17 @@
 import { Outlet } from 'react-router-dom'
-import { Layout, Menu } from 'antd'
+import { Layout } from 'antd'
+import MenuList from './components/MenuList'
 
-const { Header, Content, Footer } = Layout
+
+const { Sider, Content, Footer } = Layout
 
 const App = () => {
 	return (
 		<Layout style={{ height: '100vh' }}>
-			<Header>
-				<Menu mode="horizontal" items={[{}]}/> 
-			</Header>
-			<Content >
+			<Sider> 
+				<MenuList />
+			</Sider>
+			<Content>
 				<Outlet />
 			</Content>
 
